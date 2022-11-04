@@ -12,21 +12,30 @@ the database is an SQL (Postgres)
 which will includes the following fields 
 
 User
+
 -user_id(Primary key)
+
 -username
+
 -password
 
 
 casino account
 
 -account_number(primary key)
+
 -user-id(foreign key)
+
 -account_balance
 
 details 
+
 -user_id(foreign key)
+
 -phone 
+
 -email
+
 -address
 
 
