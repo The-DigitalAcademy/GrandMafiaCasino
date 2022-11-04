@@ -30,19 +30,7 @@ details
 -address
 
 
-## Address book
 
-Address book
-
-address book has the name,surname,phone number, email and address of people inside the database and you will be able to
-choose from  3 options : add, modify and delete
-
-database 
-
--user_id(primary key)
--phone 
--email
--address
 
 
 
