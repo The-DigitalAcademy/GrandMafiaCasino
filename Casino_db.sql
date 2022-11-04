@@ -1,4 +1,3 @@
-
 CREATE TABLE user_login(
 user_id SERIAL PRIMARY KEY NOT NULL,
 username VARCHAR(25) UNIQUE NOT NULL,
