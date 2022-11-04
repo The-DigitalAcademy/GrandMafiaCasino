@@ -29,6 +29,16 @@
             "database": "mafia_casino_db",
             "username": "postgres",
             "password": ""
+        },
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "Address_book.db",
+            "database": "postgres",
+            "username": "postgres",
+            "password": "Letsdoit!"
         }
     ]
 }
