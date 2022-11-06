@@ -8,12 +8,12 @@ password VARCHAR(25) NOT NULL
 CREATE TABLE casino_account(
 user_id SERIAL,
 Balance INT NOT NULL,
+Account_number INT NOT NULL,
 CONSTRAINT fk_casino_acc
     FOREIGN KEY(user_id) 
     REFERENCES user_login(user_id)
     ON DELETE CASCADE
 );
-
 
 CREATE TABLE details(
 user_id SERIAL PRIMARY KEY,
@@ -32,10 +32,10 @@ VALUES
 ('Neo', 'sjajhdfj')
 ;
 
-INSERT INTO casino_account(balance)
+INSERT INTO casino_account(balance,account_number)
 VALUES
-(200),
-(100)
+(200,001),
+(100,002)
 ;
 
 INSERT INTO details(phone, email, address)
