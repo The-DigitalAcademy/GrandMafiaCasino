@@ -6,24 +6,25 @@ user_login()
 
 print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
-print("Welcome to the Mafia Casino:")
+print("Welcome to the Grand Mafia Casino:")
 print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
 print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 print("What would you like to do:")
 
-options = int(input(
+options = input(
         "1. Play game\n"
         "2. Deposit\n"
         "3. Exit\n"
-    ))
+    )
 
 while options is not False:
     
-    if options == 1:
+    if options == '1':
         start_game()
         break
-    elif options == 2:
+    elif options == '2':
         deposit()
         break
     else:
+        print("Invalid Option, Please Try Again")
         break

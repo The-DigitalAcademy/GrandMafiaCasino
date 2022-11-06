@@ -1,7 +1,4 @@
-import sqlalchemy
-from sqlalchemy import create_engine, MetaData, Table, Column, Numeric,insert, Integer, VARCHAR, update, text, delete
-from sqlalchemy.engine import result
-from sqlalchemy import select
+from sqlalchemy import create_engine, MetaData, Table, Column, Integer, VARCHAR, update
 from sqlalchemy import create_engine
 import pandas as pd
 
@@ -38,14 +35,10 @@ def deposit():
     name = input("Please Enter username to Confirm: ")
     acc_number = int(input("Enter Account Number: "))
     user_login_df = pd.DataFrame(engine.execute("SELECT * FROM user_login").fetchall())
-    user_acc_df = pd.DataFrame(engine.execute("SELECT * FROM casino_account").fetchall())
-
-    user_name = pd.DataFrame(pd.read_sql("SELECT * FROM user_login Where username=%s", engine, params=(name,)))
 
     while user_login_df[1].str.contains(name).any():
-        new_amount = (update(casino_acc).where(casino_acc.c.account_number == acc_number)).values(balance=amount)
+        new_amount = (update(casino_acc).where(casino_acc.c.account_number == acc_number)).values(balance=casino_acc.c.balance + amount)
         engine.execute(new_amount)
         break
     
     return print("Deposit Done!")
- 

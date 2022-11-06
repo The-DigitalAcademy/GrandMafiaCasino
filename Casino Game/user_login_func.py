@@ -1,8 +1,6 @@
 import pandas as pd
-import sqlalchemy
-from sqlalchemy import create_engine, MetaData, Table, Column, Numeric,insert, Integer, VARCHAR, update, text, delete
-from sqlalchemy.engine import result
-from sqlalchemy import select
+from sqlalchemy import create_engine, MetaData, Table, Column, Integer, VARCHAR
+
   
 engine = create_engine("postgresql://postgres:postgres@localhost:5430/mafia_casino_db")
 
@@ -48,14 +46,14 @@ def user_login():
             print("Hi",name)
             psswrd = input("Enter your password: ")
             for passw in user_login_df[2].to_list():
-                if passw == passw:
+                if passw == psswrd:
                     print("Login Successful!")
                     break
             break
         else:
             new_name = input("Enter New Username: ")
             new_psswrd = input("Enter New Password: ")
-            statement1 = user.insert().values(username=name,password=psswrd)
+            statement1 = user.insert().values(username=new_name,password=new_psswrd)
             engine.execute(statement1)
             email_addr = input("Enter New Email: ")
             phone_num = input("Enter Phone Number: ")
