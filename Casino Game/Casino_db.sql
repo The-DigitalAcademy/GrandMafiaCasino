@@ -1,4 +1,6 @@
 -- Active: 1667640099306@@127.0.0.1@5430@mafia_casino_db@public
+DROP TABLE IF EXISTS user_login,details,casino_account;
+
 CREATE TABLE user_login(
 user_id SERIAL PRIMARY KEY NOT NULL,
 username VARCHAR(25) UNIQUE NOT NULL,
