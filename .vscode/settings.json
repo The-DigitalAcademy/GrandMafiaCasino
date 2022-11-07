@@ -5,7 +5,7 @@
             "server": "localhost",
             "port": 5430,
             "driver": "PostgreSQL",
-            "name": "Casino_db",
+            "name": "mafia_casino_db",
             "database": "mafia_casino_db",
             "username": "postgres",
             "password": "postgres"
