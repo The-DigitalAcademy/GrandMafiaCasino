@@ -1,6 +1,5 @@
--- Active: 1667640099306@@127.0.0.1@5430@mafia_casino_db@public
-DROP TABLE IF EXISTS user_login,details,casino_account;
-
+-- Active: 1668349128230@@127.0.0.1@5430@mafia_casino_db
+DROP TABLE IF EXISTS details,casino_account,user_login;
 CREATE TABLE user_login(
 user_id SERIAL PRIMARY KEY NOT NULL,
 username VARCHAR(25) UNIQUE NOT NULL,
@@ -18,7 +17,7 @@ CONSTRAINT fk_casino_acc
 );
 
 CREATE TABLE details(
-user_id SERIAL PRIMARY KEY,
+user_id SERIAL ,
 phone VARCHAR(10) NOT NULL,
 email VARCHAR(25) NOT NULL,
 address VARCHAR(50) NOT NULL,
@@ -36,8 +35,8 @@ VALUES
 
 INSERT INTO casino_account(balance,account_number)
 VALUES
-(200,001),
-(100,002)
+(2000,001),
+(1000,002)
 ;
 
 INSERT INTO details(phone, email, address)
