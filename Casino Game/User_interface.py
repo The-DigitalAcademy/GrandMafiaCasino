@@ -3,7 +3,7 @@ import streamlit as st
 import pandas as pd
 from sqlalchemy import VARCHAR, Column, Integer, MetaData, Table,create_engine, update, select
 
-st.set_page_config(layout="centered",initial_sidebar_state="auto")
+st.set_page_config(layout="centered",initial_sidebar_state="collapsed",page_title="Grand Mafia Casino",page_icon="🎲")
 engine = create_engine("postgresql://postgres:postgres@localhost:5430/mafia_casino_db")
   
 # initialize the Metadata Object
@@ -41,29 +41,33 @@ details = Table(
 def start_game():
     with st.form("game"):
         acc_number = st.number_input("Please Enter Account Number: ")
-        wager_amount = st.number_input("Enter wager amount above R10 please!: ")
+        wager_amount = st.slider("Enter wager amount between R10 and R1000 please!: ",min_value=0,max_value=1000)
 
-        user_prediction = st.number_input("Guess a number between 0,100")
-        comp_guess = random.randint(0,100)
-        st.form_submit_button("Guess")
-    
-        if user_prediction == comp_guess:
-            st.write("Congrats!")
-        else:
-            st.write("Oops you just lost ",wager_amount," The number was: ",comp_guess,"Try again!")
-            st.write("You have: R",wager_amount,"left")
-            new_amount = (update(casino_acc).where(casino_acc.c.account_number == acc_number)).values(balance=casino_acc.c.balance - wager_amount)
-            engine.execute(new_amount)
+        user_prediction = st.slider("Guess a number between 0,100",min_value=0,max_value=100)
+        comp_guess = float(random.randint(0,100))
+        submit = st.form_submit_button("Guess")
+        if submit:
+            if user_prediction == comp_guess:
+                st.write("Congrats!")
+            else:
+                st.write("Oops you just lost ",wager_amount," The number was: ",comp_guess,"Try again!")
+                new_amount = (update(casino_acc).where(casino_acc.c.account_number == acc_number)).values(balance=casino_acc.c.balance - wager_amount)
+                engine.execute(new_amount)
+                amount_df = pd.DataFrame(engine.execute("SELECT * FROM casino_account").fetchall())
+                st.write("You have: R",amount_df[1][acc_number],"left")
+                
     
        
 def deposit():
     amount = st.number_input("Enter Amount to deposit in Rands: ")
-    acc_number = st.text_input("Enter Account Number: ")
+    acc_number = st.number_input("Enter Account Number: ")
     with st.form('deposit'):
         submit_deposit= st.form_submit_button("Deposit!")
         if submit_deposit:
             new_amount = (update(casino_acc).where(casino_acc.c.account_number == acc_number)).values(balance=casino_acc.c.balance + amount)
             engine.execute(new_amount)
+            amount_df = pd.DataFrame(engine.execute("SELECT * FROM casino_account").fetchall())
+            st.write("You have: R",amount_df[1][acc_number],"in your casino account")
 
 sb = st.sidebar.success(body='Please Login before you Play game!')
 with st.sidebar:
@@ -78,6 +82,7 @@ with st.sidebar:
         if sumbit_username:
             for passw in user_login_df[2].to_list():
                 if passw == psswrd:
+                    st.write("Hi",name)
                     st.write("Login Successful!")
                     st.balloons()
                     break
@@ -85,30 +90,18 @@ st.write("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 st.markdown("<h1 style='text-align: center; color: white;'>Grand Mafia Casino</h1>", unsafe_allow_html=True)
 st.write("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 st.markdown("<h2 style='text-align: center; color: white;'>Welcome!</h2>", unsafe_allow_html=True)
+st.markdown("<h3 style='text-align: center; color: white;'>Please Login Through the sidebar</h3>", unsafe_allow_html=True)
 st.write("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 
-col1, col2, col3 , col4, col5 = st.columns(5)
+with st.form(key='main menu'):
+    st.markdown("<p style='text-align: center; color: white;'>1. Start Game\n</p>",unsafe_allow_html=True)
+    st.markdown("<p style='text-align: center; color: white;'>2. Deposit\n</p>",unsafe_allow_html=True)
+    options = st.text_input("Enter option: ")
+    st.form_submit_button('Go!')
 
-with col1:
-    pass
-with col2:
-    pass
-with col4:
-    pass
-with col5:
-    pass
-with col3 :
-    game = st.button("1. Start Game",)
-    depositing = st.button("2. Deposit   ")
-    exit = st.button("3. Exit")
-st.write("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-while exit is not True:
-    if game:
-        start_game()
-        break
-    if depositing:
-        deposit()
-        break
-                
+if options == '1':
+    start_game()
+elif options == '2':
+    deposit()       
 
 
